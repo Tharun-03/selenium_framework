@@ -1,0 +1,10 @@
+<extentreports>
+    <configuration>
+        <encoding>UTF-8</encoding>
+        <protocol>HTTPS</protocol>
+        <theme>dark</theme>
+        <document-title>Parallel Cross-Browser Execution Report</document-title>
+        <report-name>Automation Execution Dashboard</report-name>
+        <timeline.enabled>true</timeline.enabled>
+    </configuration>
+</extentreports>

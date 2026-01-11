@@ -1,0 +1,22 @@
+{
+  "inventoryName": {
+    "locatorType": "css",
+    "locatorValue": ".inventory_item_label a"
+  },
+  "addToCartButton": {
+    "locatorType": "css",
+    "locatorValue": "div.pricebar button"
+  },
+  "appLogo": {
+    "locatorType": "css",
+    "locatorValue": ".app_logo"
+  },
+  "shoppingCartLink": {
+    "locatorType": "css",
+    "locatorValue": "a.shopping_cart_link"
+  },
+  "shoppingCartBadge": {
+    "locatorType": "css",
+    "locatorValue": "a.shopping_cart_link span"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "userName": {
+    "locatorType": "css",
+    "locatorValue": "input[data-test = 'username']"
+  },
+  "password": {
+    "locatorType": "css",
+    "locatorValue": "input[data-test = 'password']"
+  },
+  "submitButton": {
+    "locatorType": "css",
+    "locatorValue": "input[data-test = 'login-button']"
+  }
+}

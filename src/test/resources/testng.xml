@@ -1,0 +1,17 @@
+<suite name="ParallelCrossBrowser" parallel="classes" thread-count="2">
+
+    <test name="ChromeSuite">
+        <parameter name="browser" value="chrome" />
+        <classes>
+            <class name="Runner.RunCucumberTest" />
+        </classes>
+    </test>
+
+    <test name="FirefoxSuite">
+        <parameter name="browser" value="firefox" />
+        <classes>
+            <class name="Runner.RunCucumberTest" />
+        </classes>
+    </test>
+
+</suite>

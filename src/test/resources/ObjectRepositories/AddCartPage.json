@@ -1,0 +1,22 @@
+{
+  "titleOfThePage": {
+    "locatorType": "css",
+    "locatorValue": "span.title"
+  },
+  "continueShopping": {
+    "locatorType": "css",
+    "locatorValue": "div.cart_footer button#continue-shopping"
+  },
+  "goBackButton": {
+    "locatorType": "css",
+    "locatorValue": "div.cart_footer button#continue-shopping img"
+  },
+  "checkout": {
+    "locatorType": "css",
+    "locatorValue": "div.cart_footer button#checkout"
+  },
+  "shoppingCartBadge": {
+    "locatorType": "css",
+    "locatorValue": "a.shopping_cart_link span"
+  }
+}
