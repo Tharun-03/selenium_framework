@@ -11,18 +11,18 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 public class cukeHooks {
-    @Before
+    @Before()
     public void beforeScenario(Scenario scenario) {
-        ExtentCucumberAdapter.getCurrentScenario().log(Status.INFO, "Execution Started: " + scenario.getName());
         String browser = DriverFactory.getInstance().getBrowser();
         if (browser == null) {
             browser = "chrome";
         }
-        System.setProperty("extent.reporter.spark.out",
-                "target/ExtentReports/" + browser.toUpperCase() + "/SparkReport.html");
-        ExtentCucumberAdapter.getCurrentScenario().assignCategory(browser.toUpperCase());
-
+        ExtentCucumberAdapter.getCurrentScenario()
+                .log(Status.INFO, "Execution Started: " + scenario.getName());
+        ExtentCucumberAdapter.getCurrentScenario()
+                .assignCategory(browser.toUpperCase());
     }
+
 
     @AfterStep
     public void addScreenshot(Scenario scenario) {

@@ -36,6 +36,7 @@ public class DriverFactory {
     public WebDriver getDriver() {
         if (driver.get() == null) {
             String browser = browserName.get();
+            System.out.println("Browser value received = " + browserName.get());
             if (browser == null || browser.isEmpty()) {
                 browser = "chrome";
             }
@@ -67,7 +68,6 @@ public class DriverFactory {
         if (driver.get() != null) {
             driver.get().quit();
             driver.remove();
-            browserName.remove();
         }
     }
 
