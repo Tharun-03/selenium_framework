@@ -1,0 +1,43 @@
+version: "3"
+services:
+  hub:
+    image: selenium/hub:4.40.0-20260202
+    ports:
+      - 4444:4444
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:4444/status" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  chrome:
+    image: selenium/node-chrome:4.40.0-20260202
+    shm_size: 2gb
+    depends_on:
+      - hub
+    environment:
+      - SE_EVENT_BUS_HOST=hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+  firefox:
+    image: selenium/node-firefox:4.40.0-20260202
+    shm_size: 2gb
+    depends_on:
+      - hub
+    environment:
+      - SE_EVENT_BUS_HOST=hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+  test-runner:
+    build:
+      context: ../SeleniumAutomation
+      dockerfile: Dockerfile
+    depends_on:
+      hub:
+        condition: service_healthy
+    environment:
+      - selenium.grid.url=http://hub:4444
+      - TZ=Asia/Kolkata
+    command: mvn  test -Pgrid
+    volumes:
+      - ./target:/app/target
+      - ./test-output:/app/test-output

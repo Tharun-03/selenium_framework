@@ -1,11 +1,15 @@
 package Utilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.URL;
 
 public class DriverFactory {
 
@@ -33,6 +37,7 @@ public class DriverFactory {
         return instance;
     }
 
+
     public WebDriver getDriver() {
         if (driver.get() == null) {
             String browser = browserName.get();
@@ -40,7 +45,14 @@ public class DriverFactory {
             if (browser == null || browser.isEmpty()) {
                 browser = "chrome";
             }
-            driver.set(createDriver(browser.toLowerCase()));
+            boolean isGridEnabled =
+                    Boolean.parseBoolean(System.getProperty("selenium.grid.enabled", "false"));
+
+            if (isGridEnabled) {
+                driver.set(createRemoteDriver(browser));
+            } else {
+                driver.set(createDriver(browser.toLowerCase()));
+            }
         }
         return driver.get();
     }
@@ -61,6 +73,39 @@ public class DriverFactory {
                 return new FirefoxDriver(firefoxOptions);
             default:
                 throw new IllegalArgumentException("Unsupported browser: " + browser);
+        }
+    }
+
+    private WebDriver createRemoteDriver(String browser) {
+        try {
+            String gridUrl = System.getProperty(
+                    "selenium.grid.url",
+                    "http://hub:4444"
+            );
+
+            MutableCapabilities options;
+
+            switch (browser.toLowerCase()) {
+                case "chrome":
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.addArguments("--incognito");
+                    options = chromeOptions;
+                    break;
+
+                case "firefox":
+                    FirefoxOptions firefoxOptions = new FirefoxOptions();
+                    firefoxOptions.addArguments("--private");
+                    options = firefoxOptions;
+                    break;
+
+                default:
+                    throw new IllegalArgumentException("Unsupported browser: " + browser);
+            }
+
+            return new RemoteWebDriver(new URL(gridUrl), options);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to create RemoteWebDriver", e);
         }
     }
 
